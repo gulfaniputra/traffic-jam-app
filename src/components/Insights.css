@@ -1,0 +1,104 @@
+/* src/components/Insights.css */
+
+.insights-container {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light grey background */
+  height: 100%;
+  overflow-y: auto;
+  color: #343a40; /* Dark grey text */
+}
+
+.insights-container h2 {
+  text-align: center;
+  color: #495057; /* Slightly lighter than main text */
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.insights-summary {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6c757d; /* Muted text color */
+  margin-bottom: 25px;
+  border-bottom: 1px solid #dee2e6; /* Light border */
+  padding-bottom: 15px;
+}
+
+.insights-message {
+  text-align: center;
+  color: #6c757d;
+  padding-top: 40px;
+}
+
+.insights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.insight-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.insight-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+}
+
+.road-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.road-rank {
+  font-weight: bold;
+  color: #495057;
+  font-size: 1.1rem;
+}
+
+.road-name {
+  font-weight: 500;
+  color: #212529;
+}
+
+.road-area {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.congestion-info {
+  display: flex;
+  align-items: center;
+}
+
+.congestion-score {
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 15px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+/* Congestion Level Colors */
+.congestion-score.low {
+  background-color: #28a745; /* Green */
+}
+.congestion-score.medium {
+  background-color: #ffc107; /* Yellow */
+  color: #212529;
+}
+.congestion-score.high {
+  background-color: #fd7e14; /* Orange */
+}
+.congestion-score.very-high {
+  background-color: #dc3545; /* Red */
+}
