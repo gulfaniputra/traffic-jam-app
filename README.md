@@ -20,17 +20,21 @@ This project is the MVP for the Balikpapan Traffic Jam Web App. It provides:
 
 The PRD is available at [GitHub Gist](https://gist.github.com/gulfaniputra/4adcfa6e11a769a6865b57815e992d8a).
 
-## How To Run
+## How To Run Locally
 
 1. Install dependencies:
    ```sh
    pnpm install
    ```
-2. Start the development server:
+2. Configure your Google Maps JavaScript API keys in the environment variables.
+3. Start frontend development server:
    ```sh
    pnpm dev
    ```
-3. Configure your Google Maps API key in the environment variables as needed.
+4. Start backend development server:
+   ```sh
+   npx convex dev
+   ```
 
 ## Features (MVP)
 
