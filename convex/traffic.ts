@@ -23,8 +23,43 @@ import { BALIKPAPAN_ROAD_SEGMENTS } from './lib/balikpapan_roads';
 // Query: Get the latest traffic insights for the Insights tab.
 export const getLatestInsights = query({
   args: {},
-  handler: async ctx => {
-    return await ctx.db.query('traffic_insights').order('desc').first();
+  handler: async () => {
+    // MOCK DATA for development
+    return {
+      _id: 'mock_id',
+      _creationTime: Date.now(),
+      generated_at: Date.now(),
+      summary:
+        'Displaying mock insights for development. Real data requires a Google Maps API key.',
+      top_congested_roads: [
+        {
+          road_name: 'Jl. Jenderal Sudirman',
+          area_name: 'Klandasan',
+          congestion_score: 0.92,
+        },
+        {
+          road_name: 'Jl. Marsma R. Iswahyudi',
+          area_name: 'Sepinggan',
+          congestion_score: 0.85,
+        },
+        {
+          road_name: 'Jl. MT Haryono',
+          area_name: 'Damai',
+          congestion_score: 0.77,
+        },
+        {
+          road_name: 'Jl. Syarifuddin Yoes',
+          area_name: 'Gunung Bahagia',
+          congestion_score: 0.65,
+        },
+        {
+          road_name: 'Jl. Soekarno-Hatta',
+          area_name: 'Batu Ampar',
+          congestion_score: 0.51,
+        },
+      ],
+      average_congestion_score: 0.74,
+    };
   },
 });
 

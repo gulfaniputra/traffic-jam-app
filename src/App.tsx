@@ -1,34 +1,23 @@
-import { useState } from 'react';
-import GoogleMapComponent from './components/GoogleMap';
+import TrafficDataList from './components/GoogleMap';
 import Insights from './components/Insights';
 import './App.css';
 
-type View = 'map' | 'insights';
-
 function App() {
-  const [view, setView] = useState<View>('map');
-
   return (
     <div className="app-container">
       <header className="app-header">
         <h1>Balikpapan Traffic Watch</h1>
-        <nav>
-          <button
-            onClick={() => setView('map')}
-            className={view === 'map' ? 'active' : ''}
-          >
-            Live Map
-          </button>
-          <button
-            onClick={() => setView('insights')}
-            className={view === 'insights' ? 'active' : ''}
-          >
-            Insights
-          </button>
-        </nav>
+        <p className="app-subtitle">
+          Development Mode: Displaying Mock Data
+        </p>
       </header>
-      <main className="app-main">
-        {view === 'map' ? <GoogleMapComponent /> : <Insights />}
+      <main className="app-main-grid">
+        <div className="main-column">
+          <TrafficDataList />
+        </div>
+        <div className="main-column">
+          <Insights />
+        </div>
       </main>
       <footer className="app-footer">
         <p>A calm look at the city's traffic.</p>

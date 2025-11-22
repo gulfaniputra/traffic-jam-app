@@ -4,73 +4,55 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 100vw;
-  background-color: #eef2f5; /* Light, cool grey background */
-  color: #333;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f0f2f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
 }
 
 .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
   background-color: #ffffff;
-  border-bottom: 1px solid #dce4e9;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #dcdcdc;
+  text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  flex-shrink: 0;
 }
 
 .app-header h1 {
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: #2c3e50; /* Muted dark blue */
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
 }
 
-.app-header nav button {
-  padding: 10px 20px;
-  border: none;
-  background-color: transparent;
+.app-subtitle {
   font-size: 1rem;
-  cursor: pointer;
-  color: #566573;
-  transition: color 0.2s ease, border-bottom 0.2s ease;
-  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  color: #e74c3c;
+  margin: 0.25rem 0 0;
 }
 
-.app-header nav button.active {
-  color: #3498db; /* Calm blue for active tab */
-  border-bottom: 3px solid #3498db;
-}
-
-.app-header nav button:hover {
-  color: #3498db;
-}
-
-.app-main {
+.app-main-grid {
   flex-grow: 1;
-  overflow: hidden; /* Ensures content doesn't overflow */
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.main-column {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  height: calc(100vh - 120px); /* Adjust based on header/footer height */
 }
 
 .app-footer {
-  text-align: center;
-  padding: 10px;
-  font-size: 0.8rem;
   background-color: #ffffff;
-  border-top: 1px solid #dce4e9;
-  color: #7f8c8d;
-  flex-shrink: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .app-header {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  .app-header h1 {
-    margin-bottom: 10px;
-  }
+  padding: 0.8rem 2rem;
+  text-align: center;
+  border-top: 1px solid #dcdcdc;
+  font-size: 0.8rem;
+  color: #888;
 }
