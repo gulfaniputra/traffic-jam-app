@@ -28,6 +28,27 @@ export const getLatestInsights = query({
   },
 });
 
+// Query: Get mock traffic data for development without an API key.
+export const getMockTrafficData = query({
+  args: {},
+  handler: async () => {
+    const trafficData = BALIKPAPAN_ROAD_SEGMENTS.map(segment => {
+      const congestionLevels = ['Low', 'Medium', 'High', 'Very High'];
+      const randomLevel =
+        congestionLevels[Math.floor(Math.random() * congestionLevels.length)];
+
+      return {
+        road_name: segment.name,
+        area_name: segment.area,
+        congestion_level: randomLevel,
+        start: segment.start,
+        end: segment.end,
+      };
+    });
+    return trafficData;
+  },
+});
+
 // =================================================================================
 // INTERNAL ACTIONS & MUTATIONS (for cron job)
 // =================================================================================
