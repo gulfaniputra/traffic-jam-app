@@ -23,59 +23,28 @@ import { BALIKPAPAN_ROAD_SEGMENTS } from './lib/balikpapan_roads';
 // Query: Get the latest traffic insights for the Insights tab.
 export const getLatestInsights = query({
   args: {},
-  handler: async () => {
-    // MOCK DATA for development
-    return {
-      _id: 'mock_id',
-      _creationTime: Date.now(),
-      generated_at: Date.now(),
-      summary:
-        'Displaying mock insights for development. Real data requires a Google Maps API key.',
-      top_congested_roads: [
-        {
-          road_name: 'Jl. Jenderal Sudirman',
-          area_name: 'Klandasan',
-          congestion_score: 0.92,
-        },
-        {
-          road_name: 'Jl. Marsma R. Iswahyudi',
-          area_name: 'Sepinggan',
-          congestion_score: 0.85,
-        },
-        {
-          road_name: 'Jl. MT Haryono',
-          area_name: 'Damai',
-          congestion_score: 0.77,
-        },
-        {
-          road_name: 'Jl. Syarifuddin Yoes',
-          area_name: 'Gunung Bahagia',
-          congestion_score: 0.65,
-        },
-        {
-          road_name: 'Jl. Soekarno-Hatta',
-          area_name: 'Batu Ampar',
-          congestion_score: 0.51,
-        },
-      ],
-      average_congestion_score: 0.74,
-    };
+  handler: async (ctx) => {
+    const latestInsight = await ctx.db
+      .query('traffic_insights')
+      .order('desc')
+      .first();
+    return latestInsight;
   },
 });
 
-// Query: Get mock traffic data for development without an API key.
-export const getMockTrafficData = query({
+// Query: Get all traffic data for the map.
+export const getTrafficData = query({
   args: {},
-  handler: async () => {
-    const trafficData = BALIKPAPAN_ROAD_SEGMENTS.map(segment => {
-      const congestionLevels = ['Low', 'Medium', 'High', 'Very High'];
-      const randomLevel =
-        congestionLevels[Math.floor(Math.random() * congestionLevels.length)];
-
+  handler: async (ctx) => {
+    const segmentsFromDB = await ctx.db.query('traffic_segments').collect();
+    const segmentsMap = new Map(segmentsFromDB.map((s) => [s.road_name, s]));
+    const trafficData = BALIKPAPAN_ROAD_SEGMENTS.map((segment) => {
+      const dbSegment = segmentsMap.get(segment.name);
       return {
-        road_name: segment.name,
-        area_name: segment.area,
-        congestion_level: randomLevel,
+        ...segment,
+        congestion_level: dbSegment?.congestion_level ?? 'Low',
+        congestion_score: dbSegment?.congestion_score ?? 0,
+        updated_at: dbSegment?.updated_at ?? 0,
         start: segment.start,
         end: segment.end,
       };

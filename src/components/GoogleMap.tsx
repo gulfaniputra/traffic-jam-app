@@ -3,7 +3,7 @@ import { api } from '../../convex/_generated/api';
 import './GoogleMap.css';
 
 function MockMapComponent() {
-  const trafficData = useQuery(api.traffic.getMockTrafficData);
+  const trafficData = useQuery(api.traffic.getTrafficData);
 
   const getCongestionColor = (level: string) => {
     if (level === 'Low') return 'low';
