@@ -84,19 +84,24 @@ The PRD is available [here](https://gist.github.com/gulfaniputra/4adcfa6e11a769a
 
 1. Install dependencies:
 
-   ```sh
+   ```
    pnpm install
    ```
 
-2. Configure your Google Maps JavaScript API keys in the environment variables.
+2. Configure your Google Maps JavaScript API keys in the environment variables:
+
+   ```
+   npx convex env set GOOGLE_MAPS_API_KEY "YOUR_API_KEY_HERE"
+   ```
+
 3. Start frontend development server in a terminal:
 
-   ```sh
+   ```
    pnpm dev
    ```
 
 4. Start backend development server on another terminal:
 
-   ```sh
+   ```
    npx convex dev
    ```
