@@ -1,8 +1,8 @@
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
-import './Insights.css';
+import './CongestionInsights.css';
 
-function Insights() {
+function CongestionInsights() {
   const insights = useQuery(api.traffic.getLatestInsights);
 
   const getCongestionColor = (score: number) => {
@@ -67,4 +67,4 @@ function Insights() {
   );
 }
 
-export default Insights;
+export default CongestionInsights;

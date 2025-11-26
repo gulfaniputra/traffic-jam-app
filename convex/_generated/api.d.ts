@@ -9,6 +9,7 @@
  */
 
 import type * as crons from "../crons.js";
+import type * as keys from "../keys.js";
 import type * as lib_balikpapan_roads from "../lib/balikpapan_roads.js";
 import type * as traffic from "../traffic.js";
 
@@ -20,6 +21,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   crons: typeof crons;
+  keys: typeof keys;
   "lib/balikpapan_roads": typeof lib_balikpapan_roads;
   traffic: typeof traffic;
 }>;

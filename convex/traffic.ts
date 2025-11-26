@@ -36,20 +36,7 @@ export const getLatestInsights = query({
 export const getTrafficData = query({
   args: {},
   handler: async (ctx) => {
-    const segmentsFromDB = await ctx.db.query('traffic_segments').collect();
-    const segmentsMap = new Map(segmentsFromDB.map((s) => [s.road_name, s]));
-    const trafficData = BALIKPAPAN_ROAD_SEGMENTS.map((segment) => {
-      const dbSegment = segmentsMap.get(segment.name);
-      return {
-        ...segment,
-        congestion_level: dbSegment?.congestion_level ?? 'Low',
-        congestion_score: dbSegment?.congestion_score ?? 0,
-        updated_at: dbSegment?.updated_at ?? 0,
-        start: segment.start,
-        end: segment.end,
-      };
-    });
-    return trafficData;
+    return await ctx.db.query('traffic_segments').collect();
   },
 });
 

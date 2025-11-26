@@ -1,5 +1,5 @@
-import TrafficDataList from './components/GoogleMap';
-import Insights from './components/Insights';
+import GoogleMap from './components/GoogleMap';
+import CongestionInsights from './components/CongestionInsights';
 import './App.css';
 
 function App() {
@@ -7,16 +7,13 @@ function App() {
     <div className="app-container">
       <header className="app-header">
         <h1>Balikpapan Traffic Watch</h1>
-        <p className="app-subtitle">
-          Development Mode: Displaying Mock Data
-        </p>
       </header>
       <main className="app-main-grid">
         <div className="main-column">
-          <TrafficDataList />
+          <GoogleMap />
         </div>
         <div className="main-column">
-          <Insights />
+          <CongestionInsights />
         </div>
       </main>
       <footer className="app-footer">
