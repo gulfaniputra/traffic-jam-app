@@ -1,6 +1,6 @@
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
-import './GoogleMap.css';
+import './TrafficDataList.css';
 
 function TrafficDataList() {
   const trafficData = useQuery(api.traffic.getTrafficData);
@@ -14,6 +14,7 @@ function TrafficDataList() {
 
   return (
     <div className="traffic-data-container">
+      <h2>Latest Traffic Conditions</h2>
       {trafficData === undefined && <div className="loading">Loading...</div>}
       {trafficData && (
         <ul className="traffic-list">
@@ -41,3 +42,4 @@ function TrafficDataList() {
 }
 
 export default TrafficDataList;
+

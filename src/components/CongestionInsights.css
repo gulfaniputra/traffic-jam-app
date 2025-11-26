@@ -1,9 +1,9 @@
 /* src/components/Insights.css */
 
 .insights-container {
-  padding: 20px;
-  background-color: #f8f9fa; /* Light grey background */
-  color: #343a40; /* Dark grey text */
+  padding: 0 20px 20px;
+  background-color: transparent;
+  color: #343a40;
 }
 
 .insights-container h2 {

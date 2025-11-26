@@ -1,4 +1,3 @@
-// src/components/GoogleMap.tsx
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
@@ -9,19 +8,18 @@ const containerStyle = {
   height: '100%',
 };
 
-// Balikpapan center
 const center = {
   lat: -1.2653,
   lng: 116.8285,
 };
 
-// This component is only rendered when the API key is available.
-const MapView = ({ apiKey }: { apiKey: string }) => {
+function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
   const trafficData = useQuery(api.traffic.getTrafficData);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
+    preventGoogleFontsLoading: true,
   });
 
   if (!isLoaded) {
@@ -30,11 +28,7 @@ const MapView = ({ apiKey }: { apiKey: string }) => {
 
   return (
     <div className="map-container">
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={12}
-      >
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
         {trafficData?.map((road) => (
           <Marker
             key={road._id}
@@ -45,27 +39,24 @@ const MapView = ({ apiKey }: { apiKey: string }) => {
       </GoogleMap>
     </div>
   );
-};
+}
 
 function GoogleMapComponent() {
   const apiKey = useQuery(api.keys.getGoogleMapsApiKey);
 
-  // The API key is still being fetched from the backend.
   if (apiKey === undefined) {
-    return <div className="loading">Loading Configuration...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
-  // The API key has been fetched, but it's missing.
-  if (apiKey === null || apiKey === '') {
+  if (!apiKey) {
     return (
       <div className="error">
-        Google Maps API Key is not configured. Please set it in the backend.
+        Missing Google Maps API Key. Please set it in the backend.
       </div>
     );
   }
 
-  // The API key is present, render the map.
-  return <MapView apiKey={apiKey} />;
+  return <GoogleMapWithApiKey apiKey={apiKey} />;
 }
 
 export default GoogleMapComponent;
