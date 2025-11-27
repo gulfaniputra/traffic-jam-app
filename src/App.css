@@ -69,7 +69,7 @@
 
 .tab-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
   height: 100%;
 }
@@ -85,8 +85,7 @@
 }
 
 .tab-content.single-column {
-  grid-template-columns: minmax(0, 2fr);
-  justify-content: center;
+  grid-template-columns: 1fr;
 }
 
 .app-footer {

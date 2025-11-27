@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import GoogleMap from './components/GoogleMap';
-import TrafficDataList from './components/TrafficDataList';
+
 import CongestionInsights from './components/CongestionInsights';
 import './App.css';
 
@@ -32,13 +32,10 @@ function App() {
             <div className="main-column">
               <GoogleMap />
             </div>
-            <div className="main-column">
-              <TrafficDataList />
-            </div>
           </div>
         )}
         {activeTab === 'insights' && (
-          <div className="tab-content single-column">
+          <div className="tab-content">
             <div className="main-column">
               <CongestionInsights />
             </div>
