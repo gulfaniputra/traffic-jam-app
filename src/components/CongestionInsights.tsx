@@ -20,8 +20,16 @@ function CongestionInsights() {
     if (!insights || insights.top_congested_roads.length === 0) {
       return (
         <div className="insights-message">
-          Traffic data is currently being generated. Please check back in a few
-          moments.
+          <p>
+            Traffic data is currently being generated. This may take a few
+            moments.
+          </p>
+          <button
+            className="refresh-button"
+            onClick={() => window.location.reload()}
+          >
+            Refresh Data
+          </button>
         </div>
       );
     }
