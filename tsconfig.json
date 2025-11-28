@@ -1,9 +1,9 @@
 {
+  "exclude": ["convex"],
   "compilerOptions": {
     "types": ["node"]
   },
   "files": [],
-  "exclude": ["convex"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" },
