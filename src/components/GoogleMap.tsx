@@ -1,20 +1,45 @@
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  TrafficLayer,
+} from '@react-google-maps/api';
 import './GoogleMap.css';
+import { useEffect, useState } from 'react';
 
 const containerStyle = {
   width: '100%',
   height: '100%',
 };
 
-const center = {
+const defaultCenter = {
   lat: -1.2653,
   lng: 116.8285,
 };
 
 function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
   const trafficData = useQuery(api.traffic.getTrafficData);
+  const [mapCenter, setMapCenter] = useState(defaultCenter);
+  const [zoom, setZoom] = useState(12);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setMapCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          setZoom(18);
+        },
+        error => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    }
+  }, []);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -28,8 +53,13 @@ function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
 
   return (
     <div className="map-container">
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
-        {trafficData?.map((road) => (
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={mapCenter}
+        zoom={zoom}
+      >
+        <TrafficLayer />
+        {trafficData?.map(road => (
           <Marker
             key={road._id}
             position={{ lat: road.latitude, lng: road.longitude }}
