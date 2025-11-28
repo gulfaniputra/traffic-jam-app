@@ -13,7 +13,7 @@ import {
   internalMutation,
 } from './_generated/server';
 import { v } from 'convex/values';
-import { api, internal } from './_generated/api';
+import { internal } from './_generated/api';
 import { BALIKPAPAN_ROAD_SEGMENTS } from './lib/balikpapan_roads';
 
 // =================================================================================
