@@ -1,6 +1,6 @@
 # Balikpapan Traffic Jam Web App (MVP)
 
-## Table of Contents
+## Table Of Contents
 
 - [About](#about)
 - [Description](#description)
@@ -78,9 +78,14 @@ The PRD is available [here](https://gist.github.com/gulfaniputra/4adcfa6e11a769a
 
 ## Demo
 
-`// In progress...`
+https://traffic-jam-app.vercel.app/
 
 ## How To Run Locally
+
+0. Requirements:
+   - [Node.js](https://nodejs.org/en)
+   - [pnpm](https://pnpm.io/)
+   - [Convex](https://www.convex.dev/)
 
 1. Install dependencies:
 
