@@ -1,9 +1,11 @@
+/* src/components/GoogleMap.css */
+
 .map-container {
   width: 100%;
   height: 100%;
   border-radius: 11px; /* Match parent's border-radius minus border width */
   overflow: hidden;
-  background-color: var(--nord5);
+  background-color: var(--border-primary); /* A neutral background for when the map is loading */
 }
 
 .loading,
@@ -14,5 +16,5 @@
   height: 100%;
   background-color: transparent;
   font-size: 1rem;
-  color: var(--nord3);
+  color: var(--text-secondary);
 }

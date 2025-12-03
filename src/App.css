@@ -4,59 +4,57 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: var(--nord5);
-  color: var(--nord1);
+  background-color: var(--background-primary);
+  color: var(--text-secondary);
 }
 
 .app-header {
-  background-color: var(--nord6);
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--nord4);
+  background-color: var(--background-secondary);
+  padding: 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--border-primary);
   text-align: center;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .app-header h1 {
   font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--nord0);
+  font-weight: 600;
+  color: var(--text-primary);
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
 }
 
 .app-nav {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
-  border-radius: 8px;
-  background-color: var(--nord5);
-  display: inline-flex;
-  border: 1px solid var(--nord4);
 }
 
 .nav-button {
-  padding: 0.6rem 1.5rem;
+  padding: 0.75rem 1.75rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--nord3);
+  color: var(--text-secondary);
   background-color: transparent;
-  border-radius: 7px;
+  border-radius: 8px;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  margin: 0 0.5rem;
 }
 
 .nav-button.active {
-  background-color: var(--nord10);
-  color: var(--nord6);
-  box-shadow: 0 2px 5px rgba(94, 129, 172, 0.2);
+  background-color: var(--accent-primary);
+  color: var(--accent-text);
+  box-shadow: 0 3px 8px rgba(94, 129, 172, 0.15);
 }
 
 .nav-button:not(.active):hover {
-  color: var(--nord0);
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
 }
 
 .app-main {
   flex-grow: 1;
-  padding: 1.5rem;
+  padding: 2rem;
   overflow: hidden;
 }
 
@@ -65,11 +63,11 @@
 }
 
 .main-column {
-  background-color: var(--nord6);
+  background-color: var(--background-secondary);
   border-radius: 12px;
-  border: 1px solid var(--nord4);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  overflow: hidden; /* Changed from overflow-y: auto */
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -77,8 +75,8 @@
 
 .app-footer {
   background-color: transparent;
-  padding: 1rem 2rem;
+  padding: 1.5rem 2.5rem;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--nord3);
+  color: var(--text-tertiary);
 }

@@ -1,26 +1,31 @@
 /* src/index.css */
 
 :root {
-  /* Nord Color Palette */
-  --nord0: #2e3440; /* Polar Night - Darkest */
-  --nord1: #3b4252;
-  --nord2: #434c5e;
-  --nord3: #4c566a; /* Polar Night - Lightest */
+  /*
+  Nordic Style Palette
+  - Backgrounds: Light, airy grays and whites.
+  - Text: Soft, dark grays instead of pure black for a calmer feel.
+  - Accents: Muted blues and greens for interactive elements.
+  - Congestion: A clear, intuitive scale from calm green to a noticeable but not jarring red.
+  */
+  --background-primary: #f4f7f9; /* Lighter, softer white */
+  --background-secondary: #ffffff; /* Pure white for cards/modals */
+  --border-primary: #e5e9f0; /* Soft grey for borders */
 
-  --nord4: #d8dee9; /* Snow Storm - Darkest */
-  --nord5: #e5e9f0;
-  --nord6: #eceff4; /* Snow Storm - Lightest */
+  --text-primary: #2e3440; /* Dark slate grey for headings */
+  --text-secondary: #4c566a; /* Lighter grey for body text and subtitles */
+  --text-tertiary: #6b7280; /* Muted grey for less important info */
 
-  --nord7: #8fbcbb; /* Frost - Icy Green/Blue */
-  --nord8: #88c0d0; /* Frost - Light Blue */
-  --nord9: #81a1c1; /* Frost - Muted Blue */
-  --nord10: #5e81ac; /* Frost - Darker Muted Blue */
+  --accent-primary: #5e81ac; /* Muted blue for primary buttons and active states */
+  --accent-primary-hover: #81a1c1; /* Lighter blue for hover */
+  --accent-text: #ffffff;
 
-  --nord11: #bf616a; /* Aurora - Red */
-  --nord12: #d08770; /* Aurora - Orange */
-  --nord13: #ebcb8b; /* Aurora - Yellow */
-  --nord14: #a3be8c; /* Aurora - Green */
-  --nord15: #b48ead; /* Aurora - Purple */
+  /* Congestion Score Palette - Calm & Intuitive */
+  --congestion-low: #a3be8c; /* Calming green */
+  --congestion-medium: #ebcb8b; /* Muted yellow */
+  --congestion-high: #d08770; /* Soft orange */
+  --congestion-very-high: #bf616a; /* Muted red */
+  --congestion-text: #ffffff;
 
   /* Base Styles */
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -31,14 +36,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  color: var(--nord1);
-  background-color: var(--nord5);
+  color: var(--text-secondary);
+  background-color: var(--background-primary);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--nord5);
+  background-color: var(--background-primary);
 }
 
 /* Remove default button styles */

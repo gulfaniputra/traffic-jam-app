@@ -59,20 +59,14 @@ export const updateAllTrafficData = internalAction({
     // Fan out and fetch data for all road segments in parallel.
     await Promise.all(
       BALIKPAPAN_ROAD_SEGMENTS.map(segment =>
-        ctx.scheduler.runAfter(
-          0,
-          internal.traffic.fetchAndProcessSegment,
-          { segment }
-        )
+        ctx.runAction(internal.traffic.fetchAndProcessSegment, {
+          segment,
+        })
       )
     );
 
-    // After a short delay to allow segments to be processed, generate the insight.
-    await ctx.scheduler.runAfter(
-      60000, // 60-second delay to ensure segments are written
-      internal.traffic.generateAndStoreInsights,
-      {}
-    );
+    // After all segments are processed, generate the insight.
+    await ctx.runMutation(internal.traffic.generateAndStoreInsights, {});
   },
 });
 
