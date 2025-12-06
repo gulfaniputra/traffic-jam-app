@@ -56,6 +56,7 @@ function CongestionInsights() {
                   className={`congestion-score ${getCongestionColor(
                     road.congestion_score
                   )}`}
+                  title="Traffic congestion increases as the background color shifts from green to red."
                 >
                   {road.congestion_score.toFixed(2)}
                 </span>
