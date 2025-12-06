@@ -1,46 +1,29 @@
 import { useState } from 'react';
 import GoogleMap from './components/GoogleMap';
-
 import CongestionInsights from './components/CongestionInsights';
 import './App.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('map');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="app-container">
       <header className="app-header">
         <h1>Balikpapan Traffic Watch</h1>
-        <nav className="app-nav">
-          <button
-            className={`nav-button ${activeTab === 'map' ? 'active' : ''}`}
-            onClick={() => setActiveTab('map')}
-          >
-            Map
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'insights' ? 'active' : ''}`}
-            onClick={() => setActiveTab('insights')}
-          >
-            Insights
-          </button>
-        </nav>
+        <button
+          className="sidebar-toggle"
+          onClick={() => setSidebarOpen(!isSidebarOpen)}
+        >
+          {isSidebarOpen ? 'Hide Insights' : 'Show Insights'}
+        </button>
       </header>
       <main className="app-main">
-        {activeTab === 'map' && (
-          <div className="tab-content">
-            <div className="main-column">
-              <GoogleMap />
-            </div>
-          </div>
-        )}
-        {activeTab === 'insights' && (
-          <div className="tab-content">
-            <div className="main-column">
-              <CongestionInsights />
-            </div>
-          </div>
-        )}
+        <div className="main-content">
+          <GoogleMap />
+        </div>
+        <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
+          <CongestionInsights />
+        </div>
       </main>
       <footer className="app-footer">
         <p>A calm look at the city's traffic.</p>

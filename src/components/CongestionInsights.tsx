@@ -69,7 +69,7 @@ function CongestionInsights() {
 
   return (
     <div className="insights-container">
-      <h2>Top 5 Congested Roads</h2>
+      <h2>Insights</h2>
       {renderContent()}
     </div>
   );
