@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'dotenv/config';
 import express from 'express';
 import http from 'http';
@@ -7,8 +8,13 @@ import { expressMiddleware } from '@as-integrations/express5';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { ClerkExpressWithAuth } from '@clerk/clerk-sdk-node';
 import { PostHog } from 'posthog-node';
-import { typeDefs, resolvers } from './schema';
 import db from './db';
+import { buildSchema } from 'type-graphql';
+import {
+  TrafficSegmentResolver,
+  TrafficInsightResolver,
+  TrafficCacheResolver,
+} from './graphql/resolvers';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -18,14 +24,23 @@ const posthog = new PostHog(process.env.POSTHOG_API_KEY || '', {
   host: 'https://app.posthog.com',
 });
 
-// Apollo Server setup
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-});
-
 async function startServer() {
+  // Build TypeGraphQL schema
+  const schema = await buildSchema({
+    resolvers: [
+      TrafficSegmentResolver,
+      TrafficInsightResolver,
+      TrafficCacheResolver,
+    ],
+    validate: false,
+  });
+
+  // Apollo Server setup
+  const server = new ApolloServer({
+    schema,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  });
+
   await server.start();
 
   app.use(express.json());
