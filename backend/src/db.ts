@@ -1,6 +1,1 @@
-import Database from 'better-sqlite3';
-
-const db = new Database('traffic.db');
-db.pragma('journal_mode = WAL');
-
-export default db;
+// All better-sqlite3 related code removed
