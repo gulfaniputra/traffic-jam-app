@@ -1,4 +1,4 @@
-# Balikpapan Traffic Jam Web App (MVP)
+# Balikpapan Traffic Jam Web App
 
 ## Table Of Contents
 
@@ -13,14 +13,13 @@
 
 ## About
 
-This project is the MVP for the Balikpapan Traffic Jam Web App. It provides:
+This project is a Balikpapan Traffic Jam Web App. It provides:
 
 - Live traffic visualization for Balikpapan using the Google Maps JavaScript API.
 - Insights tab showing the top 5 most congested roads/areas.
 - Responsive, Nordic-inspired UI.
-- Convex backend for caching and insights.
-
-Only MVP/Phase 1 features from the PRD are implemented. No Phase 2 or future features are included.
+- ~~Convex backend for caching and insights.~~
+- Containerized Node.js backend with GraphQL for caching and insights.
 
 ## Description
 
@@ -35,7 +34,16 @@ This app serves as a proof of concept for AI-assisted software development. Most
 - TypeScript
 - Vite
 - pnpm
-- Convex
+- ~~Convex~~
+- Node.js
+- Express.js
+- Apollo Client & Server
+- TypeGraphQL
+- SQLite
+- Docker
+- GitHub Actions
+- PostHog
+- Clerk
 - Google Maps JavaScript API
 
 ## PRD
@@ -83,6 +91,7 @@ https://traffic-jam-app.vercel.app/
 ## How To Run Locally
 
 0. Requirements:
+
    - [Node.js](https://nodejs.org/en)
    - [pnpm](https://pnpm.io/)
    - [Convex](https://www.convex.dev/)
