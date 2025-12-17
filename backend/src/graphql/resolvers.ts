@@ -1,13 +1,14 @@
 import { Resolver, Query } from 'type-graphql';
-import { TrafficSegment, TrafficInsight, TrafficCache } from './types';
-import db from '../db';
+import { TrafficSegment } from '../entities/TrafficSegment';
+import { TrafficInsight } from '../entities/TrafficInsight';
+import { TrafficCache } from '../entities/TrafficCache';
+import { AppDataSource } from '../data-source';
 
 @Resolver(() => TrafficSegment)
 export class TrafficSegmentResolver {
   @Query(() => [TrafficSegment], { description: 'Get all traffic segments' })
   async trafficSegments(): Promise<TrafficSegment[]> {
-    const rows = db.prepare('SELECT * FROM traffic_segments').all();
-    return rows.map(row => Object.assign(new TrafficSegment(), row));
+    return AppDataSource.getRepository(TrafficSegment).find();
   }
 }
 
@@ -15,8 +16,7 @@ export class TrafficSegmentResolver {
 export class TrafficInsightResolver {
   @Query(() => [TrafficInsight], { description: 'Get all traffic insights' })
   async trafficInsights(): Promise<TrafficInsight[]> {
-    const rows = db.prepare('SELECT * FROM traffic_insights').all();
-    return rows.map(row => Object.assign(new TrafficInsight(), row));
+    return AppDataSource.getRepository(TrafficInsight).find();
   }
 }
 
@@ -24,7 +24,6 @@ export class TrafficInsightResolver {
 export class TrafficCacheResolver {
   @Query(() => [TrafficCache], { description: 'Get all traffic caches' })
   async trafficCaches(): Promise<TrafficCache[]> {
-    const rows = db.prepare('SELECT * FROM traffic_cache').all();
-    return rows.map(row => Object.assign(new TrafficCache(), row));
+    return AppDataSource.getRepository(TrafficCache).find();
   }
 }

@@ -24,7 +24,12 @@ const posthog = new PostHog(process.env.POSTHOG_API_KEY || '', {
   host: 'https://app.posthog.com',
 });
 
+import { AppDataSource } from './data-source';
+
 async function startServer() {
+  // Initialize TypeORM Data Source
+  await AppDataSource.initialize();
+
   // Build TypeGraphQL schema
   const schema = await buildSchema({
     resolvers: [

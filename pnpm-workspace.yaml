@@ -1,3 +1,6 @@
 packages:
-  - '.'
-  - 'backend'
+  - .
+  - backend
+
+onlyBuiltDependencies:
+  - sqlite3
