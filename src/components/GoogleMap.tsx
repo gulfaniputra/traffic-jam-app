@@ -1,17 +1,17 @@
-import { useQuery } from 'convex/react';
-import { api } from '../../convex/_generated/api';
+import { useQuery } from "@apollo/client";
+import { GET_TRAFFIC_DATA } from "../graphql/queries";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   TrafficLayer,
-} from '@react-google-maps/api';
-import './GoogleMap.css';
-import { useEffect, useState } from 'react';
+} from "@react-google-maps/api";
+import "./GoogleMap.css";
+import { useEffect, useState } from "react";
 
 const containerStyle = {
-  width: '100%',
-  height: '100%',
+  width: "100%",
+  height: "100%",
 };
 
 const defaultCenter = {
@@ -20,35 +20,41 @@ const defaultCenter = {
 };
 
 function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
-  const trafficData = useQuery(api.traffic.getTrafficData);
+  const { data, loading, error } = useQuery(GET_TRAFFIC_DATA);
+  const trafficData = data?.trafficSegments || [];
+
   const [mapCenter, setMapCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(12);
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           setMapCenter({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
           setZoom(18);
         },
-        error => {
-          console.error('Error getting user location:', error);
+        (error) => {
+          console.error("Error getting user location:", error);
         }
       );
     }
   }, []);
 
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
+    id: "google-map-script",
     googleMapsApiKey: apiKey,
     preventGoogleFontsLoading: true,
   });
 
-  if (!isLoaded) {
+  if (!isLoaded || loading) {
     return <div className="loading">Loading Map...</div>;
+  }
+
+  if (error) {
+    console.error("Traffic data fetch error:", error);
   }
 
   return (
@@ -59,9 +65,9 @@ function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
         zoom={zoom}
       >
         <TrafficLayer />
-        {trafficData?.map(road => (
+        {trafficData.map((road: any) => (
           <Marker
-            key={road._id}
+            key={road.id}
             position={{ lat: road.latitude, lng: road.longitude }}
             title={`${road.road_name} (${road.congestion_level})`}
           />
@@ -72,16 +78,13 @@ function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
 }
 
 function GoogleMapComponent() {
-  const apiKey = useQuery(api.keys.getGoogleMapsApiKey);
-
-  if (apiKey === undefined) {
-    return <div className="loading">Loading...</div>;
-  }
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
   if (!apiKey) {
     return (
       <div className="error">
-        Missing Google Maps API Key. Please set it in the backend.
+        Missing Google Maps API Key. Please set VITE_GOOGLE_MAPS_API_KEY in
+        .env.local
       </div>
     );
   }

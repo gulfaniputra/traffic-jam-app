@@ -1,30 +1,30 @@
-import 'reflect-metadata';
-import 'dotenv/config';
-import express from 'express';
-import http from 'http';
-import cors from 'cors';
-import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from '@as-integrations/express5';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import { ClerkExpressWithAuth } from '@clerk/clerk-sdk-node';
-import { PostHog } from 'posthog-node';
-import db from './db';
-import { buildSchema } from 'type-graphql';
+import "reflect-metadata";
+import "dotenv/config";
+import express from "express";
+import http from "http";
+import cors from "cors";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@as-integrations/express5";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
+import { PostHog } from "posthog-node";
+// import db from './db'; // Removed invalid import
+import { buildSchema } from "type-graphql";
 import {
   TrafficSegmentResolver,
   TrafficInsightResolver,
   TrafficCacheResolver,
-} from './graphql/resolvers';
+} from "./graphql/resolvers";
 
 const app = express();
 const httpServer = http.createServer(app);
 
 // Initialize PostHog
-const posthog = new PostHog(process.env.POSTHOG_API_KEY || '', {
-  host: 'https://app.posthog.com',
+const posthog = new PostHog(process.env.POSTHOG_API_KEY || "", {
+  host: "https://app.posthog.com",
 });
 
-import { AppDataSource } from './data-source';
+import { AppDataSource } from "./data-source";
 
 async function startServer() {
   // Initialize TypeORM Data Source
@@ -55,23 +55,23 @@ async function startServer() {
   // app.use(ClerkExpressWithAuth());
 
   app.use(
-    '/graphql',
+    "/graphql",
     cors(),
     expressMiddleware(server, {
       context: async ({ req }) => {
         // You can access the authenticated user's info from req.auth
-        return { auth: req.auth };
+        return { auth: (req as any).auth };
       },
     })
   );
 
-  app.get('/', (req, res) => {
+  app.get("/", (req, res) => {
     // Example of capturing a PostHog event
     posthog.capture({
-      distinctId: req.auth?.userId || 'anonymous',
-      event: 'root_visited',
+      distinctId: (req as any).auth?.userId || "anonymous",
+      event: "root_visited",
     });
-    res.send('Welcome to the Traffic Jam App API!');
+    res.send("Welcome to the Traffic Jam App API!");
   });
 
   const port = process.env.PORT || 4000;
@@ -86,7 +86,7 @@ async function startServer() {
 startServer();
 
 // Graceful shutdown for PostHog
-process.on('SIGTERM', async () => {
+process.on("SIGTERM", async () => {
   await posthog.shutdown();
   process.exit(0);
 });

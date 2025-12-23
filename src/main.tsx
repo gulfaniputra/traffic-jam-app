@@ -1,18 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+} from "@apollo/client";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import App from "./App.tsx";
 import "./index.css";
 
-const convexUrl = import.meta.env.VITE_CONVEX_URL;
+// Initialize Apollo Client
+const httpLink = new HttpLink({
+  uri: import.meta.env.VITE_GRAPHQL_URI || "http://localhost:4000/graphql",
+});
 
-if (!convexUrl) {
-  throw new Error("VITE_CONVEX_URL environment variable is not set!");
-}
-
-const convex = new ConvexReactClient(convexUrl);
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});
 
 // Initialize PostHog
 if (typeof window !== "undefined") {
@@ -32,9 +39,9 @@ if (typeof window !== "undefined") {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <PostHogProvider client={posthog}>
-      <ConvexProvider client={convex}>
+      <ApolloProvider client={client}>
         <App />
-      </ConvexProvider>
+      </ApolloProvider>
     </PostHogProvider>
   </React.StrictMode>
 );
