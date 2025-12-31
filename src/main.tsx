@@ -6,8 +6,7 @@ import {
   ApolloProvider,
   HttpLink,
 } from "@apollo/client";
-import posthog from "posthog-js";
-import { PostHogProvider } from "posthog-js/react";
+import { PostHogProvider } from "@posthog/react";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -21,24 +20,14 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// Initialize PostHog
-if (typeof window !== "undefined") {
-  const posthogKey = import.meta.env.VITE_POSTHOG_KEY;
-  const posthogHost =
-    import.meta.env.VITE_POSTHOG_HOST || "https://app.posthog.com";
-
-  if (posthogKey) {
-    posthog.init(posthogKey, {
-      api_host: posthogHost,
-      person_profiles: "identified_only",
-      capture_pageview: false, // We tracking pageviews manually or via the provider is better for SPAs
-    });
-  }
-}
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <PostHogProvider client={posthog}>
+    <PostHogProvider
+      apiKey={import.meta.env.VITE_POSTHOG_KEY}
+      options={{
+        api_host: import.meta.env.VITE_POSTHOG_HOST,
+      }}
+    >
       <ApolloProvider client={client}>
         <App />
       </ApolloProvider>

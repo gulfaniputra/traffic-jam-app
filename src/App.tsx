@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { usePostHog } from "posthog-js/react";
+import { usePostHog } from "@posthog/react";
 import GoogleMap from "./components/GoogleMap";
 import CongestionInsights from "./components/CongestionInsights";
 import "./App.css";
