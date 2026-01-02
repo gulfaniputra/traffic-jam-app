@@ -13,6 +13,7 @@
 - **Styling**: Use Tailwind CSS for all styling. Follow mobile-first responsive design.
 - **Data Fetching**: Use a typed GraphQL client (e.g. Apollo Client). Always define TypeScript interfaces for query results.
 - **Performance**: Use `Vite` for the build pipeline. Ensure all components are modular and exported from `index.ts` files within feature folders.
+- **Design Pattern**: When integrating third-party tools and libraries, enforce the latest recommended React patterns.
 
 ## 3. Backend (Node.js + Express + GraphQL)
 
