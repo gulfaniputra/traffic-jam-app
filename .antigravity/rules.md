@@ -2,29 +2,32 @@
 
 ## 1. General Principles
 
-- **Package Manager**: Strictly use `pnpm`. Never use `npm` or `yarn`.
-- **Language**: All code must be written in TypeScript with strict type checking.
-- **Communication**: Explain architectural decisions before implementation. Highlight trade-offs between speed and scalability.
+- **Package Manager**: Strictly use `pnpm`.
+- **Language**: TypeScript (Strict Mode).
+- **Workflow**: Before writing code, provide a high-level plan. If the task is complex, request a "Plan Review" from the user.
+- **DRY Check**: Before creating a new utility or component, scan the codebase for existing patterns to maintain consistency.
 
-## 2. Frontend (React + Vite + TypeScript)
+## 2. Frontend (React + Vite)
 
-- **Component Structure**: Use functional components with arrow functions.
-- **State Management**: Prefer standard React Hooks (`useState`, `useContext`) for local state. If global state is needed, ask before installing a library.
-- **Styling**: Use Tailwind CSS for all styling. Follow mobile-first responsive design.
-- **Data Fetching**: Use a typed GraphQL client (e.g. Apollo Client). Always define TypeScript interfaces for query results.
-- **Performance**: Use `Vite` for the build pipeline. Ensure all components are modular and exported from `index.ts` files within feature folders.
-- **Design Pattern**: When integrating third-party tools and libraries, enforce the latest recommended React patterns.
+- **Component Architecture**:
+  - Functional components with arrow functions.
+  - Separate UI from logic: If a component has more than one `useEffect` or complex state logic, extract it into a Custom Hook (e.g. `useComponentLogic.ts`).
+- **Styling**: Tailwind CSS. Avoid arbitrary values; use the `tailwind.config.ts` for custom tokens.
+- **Data Fetching**:
+  - Apollo Client.
+  - Generate types from the schema (e.g. via GraphQL Code Generator).
 
 ## 3. Backend (Node.js + Express + GraphQL)
 
-- **Architecture**: Use a "Controller-Service-Repository" pattern to keep logic separated.
-- **Schema**: Use a schema-first approach for GraphQL. Keep the `.graphql` files clean and documented.
-- **Database**: Use SQLite. Write raw SQL only when necessary; otherwise, use a lightweight query builder or ORM as discussed.
-- **Error Handling**: Implement a centralized Express error handler. Ensure GraphQL errors return meaningful messages and appropriate status codes.
+- **Architecture**: Controller-Service-Repository Pattern.
+- **Database**: SQLite. Use an ORM (e.g. TypeORM) to maintain type-safe queries unless raw SQL is requested for performance.
+- **Schema Management**: Schema-first. Keep resolvers thin; delegate all business logic to the Service layer.
 
-## 4. Code Quality & Pitfalls
+## 4. Code Quality & Safety
 
-- **Naming**: Use `camelCase` for variables/functions and `PascalCase` for components/types.
-- **Imports**: Use absolute paths (e.g., `@/components/...`) as configured in `tsconfig.json`.
-- **Safety**: Never hardcode secrets. Always use `.env` files and provide a `.env.example`.
-- **Avoid**: Avoid using `any`. If a type is unknown, use `unknown` and type guards.
+- **Naming**: `camelCase` (variables), `PascalCase` (types/components), `kebab-case` (folders).
+- **Imports**: Strict absolute paths `@/...`. No relative `../../` paths.
+- **Security**:
+  - Check for exposed `.env` keys before every commit suggestion.
+  - Sanitize all user inputs to prevent SQL injection or XSS.
+- **Error Handling**: Use a standard `AppError` class for backend exceptions to ensure consistent GraphQL error extensions.
