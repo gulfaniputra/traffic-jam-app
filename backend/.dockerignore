@@ -1,5 +1,29 @@
-node_modules
+# Build Output
 dist
+out
+build
+
+# Secrets & Config
 .env
+.env.*
+*.pem
+*.key
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Dependencies
+**/node_modules
+**/bower_components
+**/__pycache__
+**/.venv
+**/poetry.lock
+
+# Source Control & IDEs
+.git
+.gitignore
+**/*.log
+.vscode
+.idea
 .DS_Store
-npm-debug.log
+*.swp
