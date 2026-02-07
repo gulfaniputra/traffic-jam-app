@@ -1,27 +1,31 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-slim
+# Base & Dependencies
+FROM node:20-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@latest --activate
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+# Build Stage
+FROM base AS build
+RUN pnpm install --frozen-lockfile
+COPY . .
+RUN pnpm build
 
-# Install pnpm
-RUN npm install -g pnpm
+# Production Runtime
+FROM node:20-alpine AS runtime
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy the root package.json and pnpm-workspace.yaml to leverage Docker cache
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY backend/package.json ./backend/
+ENV NODE_ENV=production
 
-# Install app dependencies using pnpm
-RUN pnpm install --prod --filter backend
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
-# Copy the rest of the backend source code
-COPY backend/ ./backend/
+RUN pnpm install --prod --frozen-lockfile
 
-# Build the TypeScript code
-RUN pnpm --filter backend run build
-
-# Expose the port the app runs on
+USER node
 EXPOSE 4000
 
-# Define the command to run the app
-CMD [ "pnpm", "--filter", "backend", "start" ]
+CMD ["node", "dist/index.js"]
