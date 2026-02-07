@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts"
+    "docker:build": "docker build -t traffic-backend .",
+    "docker:run": "docker run -p 4000:4000 --env-file .env traffic-backend",
+    "docker:restart": "pnpm docker:build && pnpm docker:run"
   },
   "keywords": [],
   "author": "",
