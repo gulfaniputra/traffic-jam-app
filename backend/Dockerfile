@@ -4,12 +4,15 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
 
 # Build Stage
 FROM base AS build
-RUN pnpm install --frozen-lockfile
-COPY . .
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY backend/package.json ./backend/
+RUN pnpm install --frozen-lockfile --filter backend...
+
+COPY backend ./backend
+WORKDIR /app/backend
 RUN pnpm build
 
 # Production Runtime
@@ -19,12 +22,16 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 ENV NODE_ENV=production
 
-COPY --from=build /app/dist ./dist
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=build /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
 
-RUN pnpm install --prod --frozen-lockfile
+COPY --from=build /app/backend/package.json ./backend/package.json
+COPY --from=build /app/backend/dist ./backend/dist
 
+RUN pnpm install --prod --frozen-lockfile --filter backend...
+
+WORKDIR /app/backend
 USER node
 EXPOSE 4000
 

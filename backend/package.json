@@ -8,8 +8,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "docker:build": "docker build -t traffic-backend .",
-    "docker:run": "docker run -p 4000:4000 --env-file .env traffic-backend",
+    "docker:build": "docker build -f Dockerfile -t traffic-backend ..",
+    "docker:run": "docker run -p 4000:4000 --env-file .env -v $(pwd)/database.sqlite:/app/backend/database.sqlite traffic-backend",
     "docker:restart": "pnpm docker:build && pnpm docker:run"
   },
   "keywords": [],
