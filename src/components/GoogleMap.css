@@ -5,16 +5,40 @@
   height: 100%;
   border-radius: 11px; /* Match parent's border-radius minus border width */
   overflow: hidden;
-  background-color: var(--border-primary); /* A neutral background for when the map is loading */
+  background-color: var(
+    --border-primary
+  ); /* A neutral background for when the map is loading */
 }
 
 .loading,
 .error {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   background-color: transparent;
   font-size: 1rem;
   color: var(--text-secondary);
+  text-align: center;
+  padding: 20px;
+}
+
+.error h3 {
+  margin-top: 0;
+  color: var(--congestion-very-high);
+}
+
+.error ul {
+  text-align: left;
+  display: inline-block;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.error code {
+  background-color: var(--border-primary);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
 }

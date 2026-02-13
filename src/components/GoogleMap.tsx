@@ -91,8 +91,19 @@ function GoogleMapComponent() {
   if (!apiKey) {
     return (
       <div className="error">
-        Missing Google Maps API Key. Please set VITE_GOOGLE_MAPS_API_KEY in
-        .env.local
+        <h3>Missing Google Maps API Key</h3>
+        <p>
+          Please set <code>VITE_GOOGLE_MAPS_API_KEY</code> in your environment.
+        </p>
+        <ul>
+          <li>
+            <strong>Local:</strong> Add it to <code>.env.local</code>
+          </li>
+          <li>
+            <strong>Production:</strong> Add it to your deployment platform
+            settings (e.g., Vercel Environment Variables).
+          </li>
+        </ul>
       </div>
     );
   }
