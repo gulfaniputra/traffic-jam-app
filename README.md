@@ -19,14 +19,15 @@ This project is a Balikpapan Traffic Jam Web App. It provides:
 - Insights tab showing the top 5 most congested roads/areas.
 - Responsive, Nordic-inspired UI.
 - ~~Convex backend for caching and insights.~~
-- Containerized Node.js backend with GraphQL for caching and insights.
+- Dockerized Node.js backend with GraphQL for caching and insights.
 
 ## Description
 
-This app serves as a proof of concept for AI-assisted software development. Most of the codebase was written by AI-powered coding assistants inside VS Code using:
+This app serves as a proof of concept for AI-assisted software development. Most of the codebase was written by AI-powered coding assistants ~~inside VS Code using~~:
 
-- GitHub Copilot (LLM: GPT-4.1)
-- Gemini Code Assist (LLM: Gemini 2.5 Flash)
+- ~~GitHub Copilot (LLM: GPT-4.1)~~
+- ~~Gemini Code Assist (LLM: Gemini 2.5 Flash)~~
+- Google Antigravity (LLM: Gemini 3 Flash)
 
 ## Stack
 
@@ -82,7 +83,6 @@ The PRD is available [here](https://gist.github.com/gulfaniputra/4adcfa6e11a769a
 
 - Live map with traffic overlay (auto-refresh every 5 minutes).
 - Insights tab (auto-refresh every 15 minutes).
-- Responsive and mobile-friendly.
 
 ## Demo
 
@@ -90,32 +90,26 @@ https://traffic-jam-app.vercel.app/
 
 ## How To Run Locally
 
-0. Requirements:
+Prerequisites: [Node.js](https://nodejs.org/en), [pnpm](https://pnpm.io/), & ~~[Convex](https://www.convex.dev/)~~
 
-   - [Node.js](https://nodejs.org/en)
-   - [pnpm](https://pnpm.io/)
-   - [Convex](https://www.convex.dev/)
+### Frontend (Root Directory)
 
-1. Install dependencies:
+```bash
+pnpm install
+pnpm dev
+```
 
-   ```
-   pnpm install
-   ```
+URL: http://localhost:5173
 
-2. Configure your Google Maps JavaScript API keys in the environment variables:
+Config: Ensure `.env.local` exists in the root and has your `VITE_GOOGLE_MAPS_API_KEY`.
 
-   ```
-   npx convex env set GOOGLE_MAPS_API_KEY "YOUR_API_KEY_HERE"
-   ```
+### Backend (`backend/` Directory)
 
-3. Start frontend development server in a terminal:
+```bash
+cd backend
+pnpm dev
+```
 
-   ```
-   pnpm dev
-   ```
+GraphQL Endpoint: http://localhost:4000/graphql
 
-4. Start backend development server on another terminal:
-
-   ```
-   npx convex dev
-   ```
+Config: Ensure `backend/.env` exists with your `POSTHOG_API_KEY`.

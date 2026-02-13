@@ -6,7 +6,7 @@ import cors from "cors";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
+
 import { PostHog } from "posthog-node";
 // import db from './db'; // Removed invalid import
 import { buildSchema } from "type-graphql";
@@ -15,6 +15,12 @@ import {
   TrafficInsightResolver,
   TrafficCacheResolver,
 } from "./graphql/resolvers";
+
+interface RequestWithAuth extends express.Request {
+  auth?: {
+    userId?: string;
+  };
+}
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -60,15 +66,15 @@ async function startServer() {
     expressMiddleware(server, {
       context: async ({ req }) => {
         // You can access the authenticated user's info from req.auth
-        return { auth: (req as any).auth };
+        return { auth: (req as RequestWithAuth).auth };
       },
-    })
+    }),
   );
 
   app.get("/", (req, res) => {
     // Example of capturing a PostHog event
     posthog.capture({
-      distinctId: (req as any).auth?.userId || "anonymous",
+      distinctId: (req as RequestWithAuth).auth?.userId || "anonymous",
       event: "root_visited",
     });
     res.send("Welcome to the Traffic Jam App API!");
@@ -78,7 +84,7 @@ async function startServer() {
   httpServer.listen({ port }, () => {
     console.log(`🚀 Server ready at http://localhost:${port}`);
     console.log(
-      `🚀 GraphQL endpoint ready at http://localhost:${port}/graphql`
+      `🚀 GraphQL endpoint ready at http://localhost:${port}/graphql`,
     );
   });
 }

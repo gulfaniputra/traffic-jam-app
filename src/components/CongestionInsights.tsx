@@ -67,25 +67,35 @@ function CongestionInsights() {
           </p>
         </div>
         <ul className="insights-list">
-          {insights.top_congested_roads.map((road: any, index: number) => (
-            <li key={index} className="insight-item">
-              <div className="road-info">
-                <span className="road-rank">{index + 1}.</span>
-                <span className="road-name">{road.road_name}</span>
-                <span className="road-area">{road.area_name}</span>
-              </div>
-              <div className="congestion-info">
-                <span
-                  className={`congestion-score ${getCongestionColor(
-                    road.congestion_score
-                  )}`}
-                  title="Traffic congestion increases as the background color shifts from green to red."
-                >
-                  {road.congestion_score.toFixed(2)}
-                </span>
-              </div>
-            </li>
-          ))}
+          {insights.top_congested_roads.map(
+            (
+              road: {
+                road_name: string;
+                area_name: string;
+                congestion_score: number;
+                congestion_level: string;
+              },
+              index: number,
+            ) => (
+              <li key={index} className="insight-item">
+                <div className="road-info">
+                  <span className="road-rank">{index + 1}.</span>
+                  <span className="road-name">{road.road_name}</span>
+                  <span className="road-area">{road.area_name}</span>
+                </div>
+                <div className="congestion-info">
+                  <span
+                    className={`congestion-score ${getCongestionColor(
+                      road.congestion_score,
+                    )}`}
+                    title="Traffic congestion increases as the background color shifts from green to red."
+                  >
+                    {road.congestion_score.toFixed(2)}
+                  </span>
+                </div>
+              </li>
+            ),
+          )}
         </ul>
       </>
     );

@@ -38,7 +38,7 @@ function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
         },
         (error) => {
           console.error("Error getting user location:", error);
-        }
+        },
       );
     }
   }, []);
@@ -65,13 +65,21 @@ function GoogleMapWithApiKey({ apiKey }: { apiKey: string }) {
         zoom={zoom}
       >
         <TrafficLayer />
-        {trafficData.map((road: any) => (
-          <Marker
-            key={road.id}
-            position={{ lat: road.latitude, lng: road.longitude }}
-            title={`${road.road_name} (${road.congestion_level})`}
-          />
-        ))}
+        {trafficData.map(
+          (road: {
+            id: string;
+            road_name: string;
+            congestion_level: string;
+            latitude: number;
+            longitude: number;
+          }) => (
+            <Marker
+              key={road.id}
+              position={{ lat: road.latitude, lng: road.longitude }}
+              title={`${road.road_name} (${road.congestion_level})`}
+            />
+          ),
+        )}
       </GoogleMap>
     </div>
   );
