@@ -1,27 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ObjectType, Field, ID, Int, Float } from 'type-graphql';
-import { TrafficSegment } from './TrafficSegment';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { ObjectType, Field, ID, Float } from "type-graphql";
+import { TrafficSegment } from "./TrafficSegment";
 
 @ObjectType()
-@Entity('traffic_insights')
+@Entity("traffic_insights")
 export class TrafficInsight {
   @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Field(() => Int)
-  @Column('int')
+  @Field(() => Float)
+  @Column("bigint")
   generated_at!: number;
 
   @Field(() => String)
-  @Column('text')
+  @Column("text")
   summary!: string;
 
   @Field(() => [TrafficSegment])
-  @Column('simple-json')
+  @Column("jsonb")
   top_congested_roads!: TrafficSegment[];
 
   @Field(() => Float)
-  @Column('float')
+  @Column("float")
   average_congestion_score!: number;
 }

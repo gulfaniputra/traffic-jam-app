@@ -20,7 +20,7 @@ This is a **Traffic Jam Web App** for Balikpapan, built as a proof of concept fo
 - **Runtime**: Node.js (v22+ recommended).
 - **Framework**: Express.js.
 - **API**: GraphQL (Apollo Server + TypeGraphQL).
-- **Database**: SQLite (`database.sqlite`) via TypeORM.
+- **Database**: NeonDB (PostgreSQL) via TypeORM.
 - **Language**: TypeScript (`tsx` for execution).
 - **Auth**: Clerk (SDK installed, middleware available but optional).
 

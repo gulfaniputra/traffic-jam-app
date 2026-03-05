@@ -40,7 +40,7 @@ This app serves as a proof of concept for AI-assisted software development. Most
 - Express.js
 - Apollo Client & Server
 - TypeGraphQL
-- SQLite
+- NeonDB (PostgreSQL)
 - Docker
 - GitHub Actions
 - PostHog
@@ -112,4 +112,4 @@ pnpm dev
 
 GraphQL Endpoint: http://localhost:4000/graphql
 
-Config: Ensure `backend/.env` exists with your `POSTHOG_API_KEY`.
+Config: Ensure `backend/.env` exists with your `POSTHOG_API_KEY` and `DATABASE_URL`.

@@ -20,7 +20,7 @@
 ## 3. Backend (Node.js + Express + GraphQL)
 
 - **Architecture**: Resolver-Entity Pattern (TypeGraphQL + TypeORM).
-- **Database**: SQLite. Use TypeORM to maintain type-safe queries unless raw SQL is requested for performance.
+- **Database**: NeonDB (PostgreSQL). Use TypeORM to maintain type-safe queries unless raw SQL is requested for performance.
 - **Schema Management**: Code-first (TypeGraphQL). Keep resolvers thin; delegate complex logic to services or utility functions.
 
 ## 4. Code Quality & Safety

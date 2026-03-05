@@ -1,38 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { ObjectType, Field, ID, Float } from "type-graphql";
 
 @ObjectType()
-@Entity('traffic_segments')
+@Entity("traffic_segments")
 export class TrafficSegment {
   @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Field(() => String)
-  @Column('text')
+  @Column("text")
   road_name!: string;
 
   @Field(() => String)
-  @Column('text')
+  @Column("text")
   area_name!: string;
 
   @Field(() => Float)
-  @Column('float')
+  @Column("float")
   congestion_score!: number;
 
   @Field(() => String)
-  @Column('text')
+  @Column("text")
   congestion_level!: string;
 
   @Field(() => Float)
-  @Column('float')
+  @Column("float")
   latitude!: number;
 
   @Field(() => Float)
-  @Column('float')
+  @Column("float")
   longitude!: number;
 
-  @Field(() => Int)
-  @Column('int')
+  @Field(() => Float)
+  @Column("bigint")
   updated_at!: number;
 }

@@ -6,15 +6,17 @@ import cors from "cors";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 
 import { PostHog } from "posthog-node";
-// import db from './db'; // Removed invalid import
 import { buildSchema } from "type-graphql";
 import {
   TrafficSegmentResolver,
   TrafficInsightResolver,
   TrafficCacheResolver,
 } from "./graphql/resolvers";
+
+import { AppDataSource } from "./data-source";
 
 interface RequestWithAuth extends express.Request {
   auth?: {
@@ -30,11 +32,21 @@ const posthog = new PostHog(process.env.POSTHOG_API_KEY || "", {
   host: "https://app.posthog.com",
 });
 
-import { AppDataSource } from "./data-source";
-
 async function startServer() {
+  // Check for DATABASE_URL
+  if (!process.env.DATABASE_URL) {
+    console.error("❌ DATABASE_URL is not set in environment variables");
+    process.exit(1);
+  }
+
   // Initialize TypeORM Data Source
-  await AppDataSource.initialize();
+  try {
+    await AppDataSource.initialize();
+    console.log("✅ Data Source has been initialized!");
+  } catch (err) {
+    console.error("❌ Error during Data Source initialization:", err);
+    process.exit(1);
+  }
 
   // Build TypeGraphQL schema
   const schema = await buildSchema({
@@ -49,30 +61,33 @@ async function startServer() {
   // Apollo Server setup
   const server = new ApolloServer({
     schema,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageLocalDefault({ embed: false }),
+    ],
   });
 
   await server.start();
 
   app.use(express.json());
 
-  // Clerk authentication middleware
-  // Uncomment this to protect your entire API
-  // app.use(ClerkExpressWithAuth());
+  // Support for Chrome's Private Network Access security feature
+  app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Private-Network", "true");
+    next();
+  });
 
   app.use(
     "/graphql",
-    cors(),
+    cors<cors.CorsRequest>(),
     expressMiddleware(server, {
       context: async ({ req }) => {
-        // You can access the authenticated user's info from req.auth
         return { auth: (req as RequestWithAuth).auth };
       },
     }),
   );
 
   app.get("/", (req, res) => {
-    // Example of capturing a PostHog event
     posthog.capture({
       distinctId: (req as RequestWithAuth).auth?.userId || "anonymous",
       event: "root_visited",
